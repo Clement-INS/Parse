@@ -2,23 +2,25 @@ import json,ast,re,unicodedata
 import sys
 from dataclasses import dataclass
 
+#Pour lancer le parseur mettre en paramètre le fichier json de sortie du crawler exemple : python3 ./parse.py ../output/2022-02-09\ 09:23:42.746607.json
 
 filename = sys.argv[1] 
 partisData = {}
+partiscandidate = {}
 
 # Représente les données associées à un parti
 @dataclass
 class Datas:
     """Class representing datas we get from the videos"""
-    views: int = 0
-    time : float = 0.0
+    views: int = 0 #nb vues du parti
+    time : float = 0.0 #durées de vidéos sur le parti en heure
 
 # Enleve les accents d'un string
 def remove_accents(input_str):
     nfkd_form = unicodedata.normalize('NFKD', input_str)
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
-# Converti le string correspondant aux vues d'une vidéo en un chiffre
+# Convertit le string correspondant aux vues d'une vidéo en un chiffre
 def nbViews(views):
     if isinstance(views, str):
         nb_views = views.split()
@@ -73,26 +75,27 @@ def getListSupports():
 
 # Ajoute les données d'une vidéo au parti associé selon le titre de la vidéo:
 # addPartisData(listSupports, video["title"], nbViews(video["views"], nbTime["duration"]))
-def addPartisData(listSupports, title, views, time):
-   title = remove_accents(title)
-   title = title.upper()
-   for partie in listSupports:
-       for name in listSupports[partie]:
-           pattern = "(?:^|\W)"+name+"(?:$|\W)"
-           if re.search(pattern, title, re.UNICODE):
-               #print("Name : ", name, ", Title : ", title, ", Views : ", views, "\n")
-               partisData[partie].views = partisData[partie].views + views
-               partisData[partie].time = partisData[partie].time + time
-               break
+def addPartisData(listSupports, title, views, time, pronf, homepos):
+    title = remove_accents(title)
+    title = title.upper()
+    for partie in listSupports:
+        for name in listSupports[partie]:
+            pattern = "(?:^|\W)"+name+"(?:$|\W)"
+            if re.search(pattern, title, re.UNICODE):
+                #AJOUTER DANS LA BASE DE DONNÉE ICI !!!
+                break
 
 # Main
 with open(filename) as f:
     file = json.load(f)
     listSupports = getListSupports()
     for video in file:
-        addPartisData(listSupports, video["title"], nbViews(video["views"]), nbTime(video["duration"]))
-        #print(type(video["duration"]))
-        # print("url : ",video["url"])
+        #print(video.keys())
+        #break
+        #print(nbViews(video["views"]))
+        addPartisData(listSupports, video["title"], nbViews(video["views"]), nbTime(video["duration"]), video["refreshNB"], video["homePosition"])
+        #print(video["homePosition"])
+        #print("url : ",video["url"])
         # print("views : ",video["views"])
         #print("duration : ",video["duration"])
         #print(nbTime(video["duration"]))
@@ -100,4 +103,5 @@ with open(filename) as f:
         # print("title : ",video["title"])
         # print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
         # print("watchTime : ",video["watchTime"])
-    print(partisData)
+    #print(partisData)
+    #print(partisData['La Republique en marche'].views)
