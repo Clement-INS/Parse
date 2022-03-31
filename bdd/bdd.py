@@ -49,10 +49,9 @@ if __name__ == "__main__" :
 	
 	bdd = BDD()
 	
-	bdd.manage.renewTables()
+	# bdd.manage.renewTables()
 	# bdd.manage.createTables()
 	# bdd.manage.destroyAllTable()
-
 
 	bdd.cur.execute("SELECT * FROM Video")
 	for x in bdd.cur :

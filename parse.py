@@ -93,7 +93,7 @@ partisData = {}
 partiscandidate = {}
 listSupports = getListSupports()
 
-onlyfiles = [f for f in listdir(foldername) if isfile(join(foldername, f))]
+onlyfiles = [f for f in listdir(foldername) if isfile(join(foldername, f)) and ".json" in f]
 
 for filename in onlyfiles :
     print('parsing {}...'.format(filename))
@@ -105,6 +105,11 @@ for filename in onlyfiles :
             except:
                 print("EXCEPT TIME",video["duration"])
                 continue
-            addPartisData(filename.replace(".json",""),listSupports, video["title"], nbViews(video["views"]), time, video["refreshNB"], video["homePosition"])
+            try :
+                views = nbViews(video["views"])
+            except:
+                print("EXCEPT VIEWS",video["views"])
+                continue
+            addPartisData(filename.replace(".json",""),listSupports, video["title"], views, time, video["refreshNB"], video["homePosition"])
     bdd.commit()
 
