@@ -1,12 +1,10 @@
-import json,ast,re,unicodedata
+import json,re,unicodedata
 import sys
 from dataclasses import dataclass
 
-#Pour lancer le parseur mettre en paramètre le fichier json de sortie du crawler exemple : python3 ./parse.py ../output/2022-02-09\ 09:23:42.746607.json
-
-filename = sys.argv[1] 
-partisData = {}
-partiscandidate = {}
+from bdd import *
+from os import listdir
+from os.path import isfile, join
 
 # Représente les données associées à un parti
 @dataclass
@@ -75,33 +73,38 @@ def getListSupports():
 
 # Ajoute les données d'une vidéo au parti associé selon le titre de la vidéo:
 # addPartisData(listSupports, video["title"], nbViews(video["views"], nbTime["duration"]))
-def addPartisData(listSupports, title, views, time, pronf, homepos):
+def addPartisData(filename,listSupports, title, views, time, pronf, homepos):
     title = remove_accents(title)
     title = title.upper()
     for partie in listSupports:
         for name in listSupports[partie]:
             pattern = "(?:^|\W)"+name+"(?:$|\W)"
             if re.search(pattern, title, re.UNICODE):
-                #AJOUTER DANS LA BASE DE DONNÉE ICI !!!
+                # print(partie)
+                bdd.set.addVideo(partie,filename,views,time,pronf,homepos)
                 break
 
 # Main
-with open(filename) as f:
-    file = json.load(f)
-    listSupports = getListSupports()
-    for video in file:
-        #print(video.keys())
-        #break
-        #print(nbViews(video["views"]))
-        addPartisData(listSupports, video["title"], nbViews(video["views"]), nbTime(video["duration"]), video["refreshNB"], video["homePosition"])
-        #print(video["homePosition"])
-        #print("url : ",video["url"])
-        # print("views : ",video["views"])
-        #print("duration : ",video["duration"])
-        #print(nbTime(video["duration"]))
-        # print("subscribers : ",video["subscribers"])
-        # print("title : ",video["title"])
-        # print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
-        # print("watchTime : ",video["watchTime"])
-    #print(partisData)
-    #print(partisData['La Republique en marche'].views)
+bdd = BDD()
+
+#Pour lancer le parseur mettre en paramètre le dossier où se trouvent les fichiers json de sortie du crawler exemple : python3 ./parse.py ../output/2022-02-09\ 09:23:42.746607.json
+foldername = sys.argv[1] 
+partisData = {}
+partiscandidate = {}
+listSupports = getListSupports()
+
+onlyfiles = [f for f in listdir(foldername) if isfile(join(foldername, f))]
+
+for filename in onlyfiles :
+    print('parsing {}...'.format(filename))
+    with open("./{}/{}".format(foldername,filename)) as f:
+        file = json.load(f)
+        for video in file:
+            try :
+                time = nbTime(video["duration"])
+            except:
+                print("EXCEPT TIME",video["duration"])
+                continue
+            addPartisData(filename.replace(".json",""),listSupports, video["title"], nbViews(video["views"]), time, video["refreshNB"], video["homePosition"])
+    bdd.commit()
+
