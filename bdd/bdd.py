@@ -37,7 +37,6 @@ class BDD():
 		self.cur = conn.cursor()
 		self.manage = Manage(self)
 		self.set = Set(self)
-		self.get = Get(self)
 
 	def request(self,req,args):
 		return self.cur.execute(req,args)
