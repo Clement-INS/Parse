@@ -1,5 +1,3 @@
-
-from datetime import datetime
 class Set():
 	def __init__(self,bdd):
 		self.cur = bdd.cur
@@ -11,7 +9,6 @@ class Set():
 	# 					ON DUPLICATE KEY UPDATE nom=nom"""
 	# 	self.cur.execute(Q_Champion,(ugg_id,champ_name))
 
-	def addVideo(self,parti,scenario,vue,duree,profondeur,homePosition):
-		date = datetime.date(datetime.now())
+	def addVideo(self,parti,scenario,vue,duree,profondeur,homePosition,date):
 		Q_Video = """INSERT INTO Video (parti,scenario,vue,duree,profondeur,homePosition,date) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
 		self.cur.execute(Q_Video,(parti,scenario,vue,duree,profondeur,homePosition,date))

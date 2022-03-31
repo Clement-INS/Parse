@@ -53,6 +53,6 @@ if __name__ == "__main__" :
 	# bdd.manage.createTables()
 	# bdd.manage.destroyAllTable()
 
-	bdd.cur.execute("SELECT * FROM Video")
+	bdd.cur.execute("SELECT COUNT(*) FROM Video")
 	for x in bdd.cur :
 		print(x)

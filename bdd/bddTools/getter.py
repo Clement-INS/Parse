@@ -2,6 +2,14 @@ class Get():
 	def __init__(self,bdd):
 		self.cur = bdd.cur
 
+	# 
+	def numberOf(self):
+		query = """SELECT COUNT(*) 
+				   FROM Video
+				   GROUP BY parti,date"""
+		self.cur.execute(query)
+		return self.cur.fetchall()
+
 	# def numberOf(self,table):
 	# 	query = "SELECT COUNT(*) FROM {}".format(table)
 	# 	self.cur.execute(query)
