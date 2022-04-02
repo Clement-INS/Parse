@@ -86,7 +86,7 @@ def addPartisData(filename,listSupports, title, views, time, pronf, homepos, dat
                 break
 
 # Main
-from datetime import datetime.strptime
+import os
 bdd = BDD()
 
 #Pour lancer le parseur mettre en paramètre le dossier où se trouvent les fichiers json de sortie du crawler exemple : python3 ./parse.py ../output/2022-02-09\ 09:23:42.746607.json
@@ -97,7 +97,8 @@ listSupports = getListSupports()
 
 onlyfiles = [f for f in listdir(foldername) if isfile(join(foldername, f)) and ".json" in f]
 
-date = strptime(foldername, "%Y %m %d")
+date = os.path.basename(os.path.normpath(foldername))
+print("data from ",date)
 
 for filename in onlyfiles :
     print('parsing {}...'.format(filename))
