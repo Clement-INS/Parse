@@ -3,7 +3,6 @@ from time import strptime
 import sys
 from dataclasses import dataclass
 
-from bdd import *
 from os import listdir
 from os.path import isfile, join
 
@@ -74,19 +73,20 @@ def getListSupports():
 
 # Ajoute les données d'une vidéo au parti associé selon le titre de la vidéo:
 # addPartisData(listSupports, video["title"], nbViews(video["views"], nbTime["duration"]))
-def addPartisData(filename,listSupports, title, views, time, pronf, homepos, date):
+def addPartisData(filename,listSupports, title, views, time, pronf, homepos, date, url, titre):
     title = remove_accents(title)
     title = title.upper()
     for partie in listSupports:
         for name in listSupports[partie]:
             pattern = "(?:^|\W)"+name+"(?:$|\W)"
             if re.search(pattern, title, re.UNICODE):
-                # print(partie)
-                bdd.set.addVideo(partie,filename,views,time,pronf,homepos,date)
+                print("url : {} , titre : {}".format(len(url),len(titre)))
+                # bdd.set.addVideo(partie,filename,views,time,pronf,homepos,date, url, titre)
                 break
 
 # Main
-from datetime import datetime.strptime
+from datetime import datetime
+from bdd import *
 bdd = BDD()
 
 #Pour lancer le parseur mettre en paramètre le dossier où se trouvent les fichiers json de sortie du crawler exemple : python3 ./parse.py ../output/2022-02-09\ 09:23:42.746607.json
@@ -97,7 +97,7 @@ listSupports = getListSupports()
 
 onlyfiles = [f for f in listdir(foldername) if isfile(join(foldername, f)) and ".json" in f]
 
-date = strptime(foldername, "%Y %m %d")
+date = datetime.strptime(foldername, "%Y %m %d")
 
 for filename in onlyfiles :
     print('parsing {}...'.format(filename))
@@ -114,6 +114,6 @@ for filename in onlyfiles :
             except:
                 print("EXCEPT VIEWS",video["views"])
                 continue
-            addPartisData(filename.replace(".json",""),listSupports, video["title"], views, time, video["refreshNB"], video["homePosition"],date)
-    bdd.commit()
+            addPartisData(filename.replace(".json",""),listSupports, video["title"], views, time, video["refreshNB"], video["homePosition"],date,video["url"],video["title"])
+    # bdd.commit()
 
