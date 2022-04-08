@@ -73,16 +73,28 @@ def getListSupports():
 
 # Ajoute les données d'une vidéo au parti associé selon le titre de la vidéo:
 # addPartisData(listSupports, video["title"], nbViews(video["views"], nbTime["duration"]))
-def addPartisData(filename,listSupports, title, views, time, pronf, homepos, date, url, titre):
+def addPartisData(filename, title, views, time, pronf, homepos, date, url, titre):
+    # listSupports = getListSupports()
+    # title = remove_accents(title)
+    # title = title.upper()
+    # for partie in listSupports:
+    #     for name in listSupports[partie]:
+    #         pattern = "(?:^|\W)"+name+"(?:$|\W)"
+    #         if re.search(pattern, title, re.UNICODE):
+    #             print("url : {} , titre : {}".format(len(url),len(titre)))
+    #             # bdd.set.addVideo(partie,filename,views,time,pronf,homepos,date, url, titre)
+    #             break
+
     title = remove_accents(title)
     title = title.upper()
-    for partie in listSupports:
-        for name in listSupports[partie]:
-            pattern = "(?:^|\W)"+name+"(?:$|\W)"
-            if re.search(pattern, title, re.UNICODE):
-                print("url : {} , titre : {}".format(len(url),len(titre)))
-                # bdd.set.addVideo(partie,filename,views,time,pronf,homepos,date, url, titre)
-                break
+    with open('candidats.json') as json_file:
+        candidats = json.load(json_file)
+    
+    for name in candidats :
+        pattern = "(?:^|\W)"+name+"(?:$|\W)"
+        if re.search(pattern, title, re.UNICODE):
+            bdd.set.addVideo(name,filename,views,time,pronf,homepos,date, url, titre)
+            break
 
 # Main
 from datetime import datetime
@@ -93,10 +105,8 @@ bdd = BDD()
 foldername = sys.argv[1] 
 partisData = {}
 partiscandidate = {}
-listSupports = getListSupports()
 
 onlyfiles = [f for f in listdir(foldername) if isfile(join(foldername, f)) and ".json" in f]
-
 date = datetime.strptime(foldername, "%Y %m %d")
 
 for filename in onlyfiles :
@@ -114,6 +124,6 @@ for filename in onlyfiles :
             except:
                 print("EXCEPT VIEWS",video["views"])
                 continue
-            addPartisData(filename.replace(".json",""),listSupports, video["title"], views, time, video["refreshNB"], video["homePosition"],date,video["url"],video["title"])
+            addPartisData(filename.replace(".json",""), video["title"], views, time, video["refreshNB"], video["homePosition"],date,video["url"],video["title"])
     # bdd.commit()
 
