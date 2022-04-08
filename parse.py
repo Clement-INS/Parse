@@ -91,7 +91,8 @@ def addPartisData(filename, title, views, time, pronf, homepos, date, url, titre
         candidats = json.load(json_file)
     
     for name in candidats :
-        pattern = "(?:^|\W)"+name+"(?:$|\W)"
+        pattern = "^((?!gaetan).)*(?:^|\W)" + name + "(?:$|\W)"
+        # pattern = "(?:^|\W)"+name+"(?:$|\W)"
         if re.search(pattern, title, re.UNICODE):
             bdd.set.addVideo(name,filename,views,time,pronf,homepos,date, url, titre)
             break
