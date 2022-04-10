@@ -13,6 +13,8 @@ class Manage():
 								vue bigint,
 								duree float,
 								profondeur int,
+								url VARCHAR(70),
+								title VARCHAR(200),
 								homePosition int,
 								date DATE,
 							UNIQUE(parti,scenario,vue,duree,profondeur,homePosition,date))""")
