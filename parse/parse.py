@@ -2,15 +2,6 @@
 import json
 import re
 import unicodedata
-from dataclasses import dataclass
-
-
-# Représente les données associées à un parti
-@dataclass
-class Datas:
-    """Class representing datas we get from the videos"""
-    views: int = 0  # nb vues du parti
-    time: float = 0.0  # durées de vidéos sur le parti en heure
 
 
 def remove_accents(input_str: str) -> str:
@@ -65,24 +56,8 @@ def get_list_supports():
     Renvoie la liste des noms associés aux candidats
     et leurs supports en majuscule
     """
-    with open('candidates_and_supports.json', encoding="utf-8") as json_cas:
-        with open('candidats.json', encoding='utf-8') as json_candidats:
-            partis_data = {}
-            candidates_and_supports = json.load(json_cas)
-            candidats = json.load(json_candidats)
-            for partie in candidates_and_supports:
-                if partie not in partis_data:
-                    partis_data[partie] = Datas()
-                list_of_cands_supps = []
-                for candidate in candidates_and_supports[partie]:
-                    names = candidate.split(' ')
-                    good_name = []
-                    for name in names:
-                        if name[-1].isupper():
-                            good_name.append(name)
-                    list_of_cands_supps.append(' '.join(good_name))
-                candidates_and_supports[partie] = list_of_cands_supps
-            return (partis_data, candidates_and_supports, candidats)
+    with open('candidats.json', encoding='utf-8') as json_candidats:
+        return json.load(json_candidats)
 
 
 def sort_video(title, candidats) -> str:
@@ -91,28 +66,18 @@ def sort_video(title, candidats) -> str:
     d'un candidat ou de ses supports
     """
     title = remove_accents(title).upper()
-    for name in candidats.keys():
+    for name in candidats:
         # pattern = "(?:^|\W)"+name+"(?:$|\W)"
         pattern = r"^((?!gaetan).)*(?:^|\W)" + name + r"(?:$|\W)"
         if re.search(pattern, title, re.UNICODE):
-            return candidats[name]
+            return name
     return ""
+
 
 def add_parti_data(bdd, name, scenario, video, views, wtime, extract_date):
     """
     Ajoute les données d'une vidéo au parti associé selon le titre de la vidéo:
     """
-    # listSupports = getListSupports()
-    # title = remove_accents(title)
-    # title = title.upper()
-    # for partie in listSupports:
-    #     for name in listSupports[partie]:
-    #         pattern = "(?:^|\W)"+name+"(?:$|\W)"
-    #         if re.search(pattern, title, re.UNICODE):
-    #             print("url : {} , titre : {}".format(len(url),len(titre)))
-    #             # bdd.set.addVideo(partie,filename,views,time,
-    #                                pronf,homepos,date, url, titre)
-    #             break
     bdd.set.addVideo(
             name,
             scenario,

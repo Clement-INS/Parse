@@ -15,7 +15,7 @@ bdd = BDD()
 # Pour lancer le parseur mettre en paramètre le dossier où se trouvent
 # les fichiers json de sortie du crawler exemple : python3 ./parse.py ex.json
 foldername = sys.argv[1]
-(partis_data, list_supports, candidats) = get_list_supports()
+candidats = get_list_supports()
 
 onlyfiles = [f for f in listdir(foldername)
              if isfile(join(foldername, f)) and ".json" in f]
@@ -42,7 +42,7 @@ for filename in onlyfiles:
                     continue
                 add_parti_data(
                         bdd,
-                        candidats[candidat],
+                        candidat,
                         filename.replace(".json", ""),
                         video,
                         views,
