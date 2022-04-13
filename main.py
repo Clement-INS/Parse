@@ -49,4 +49,4 @@ for filename in onlyfiles:
                         wtime,
                         extract_date
                 )
-    # bdd.commit()
+    bdd.commit()

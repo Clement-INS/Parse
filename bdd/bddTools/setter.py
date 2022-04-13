@@ -9,7 +9,7 @@ class Set():
     def addVideo(self, parti, scenario, video, vue, duree, date):
         """ Ajout dans les tables d'infos """
         q_video = """INSERT INTO Video (parti,scenario,vue,duree,profondeur,
-                                        homePosition,date,url,title)
+                                        url,title,homePosition,date)
                             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
         self.cur.execute(q_video, (parti, scenario, vue, duree,
                                    video['refreshNB'], video['url'],
