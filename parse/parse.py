@@ -65,11 +65,11 @@ def sort_video(title, candidats) -> str:
     Indique si le titre d'une vidéo contient le nom
     d'un candidat ou de ses supports
     """
-    title = remove_accents(title).upper()
+    nt = remove_accents(title).upper()
     for name in candidats:
         # pattern = "(?:^|\W)"+name+"(?:$|\W)"
-        pattern = r"^((?!gaetan).)*(?:^|\W)" + name + r"(?:$|\W)"
-        if re.search(pattern, title, re.UNICODE):
+        pattern = r"(?:^|\W)((?!(GAETAN|G)).)* " + name + r"(?:$|\W)"
+        if re.search(pattern, nt, re.UNICODE):
             return name
     return ""
 
