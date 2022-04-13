@@ -12,5 +12,6 @@ class Set():
                                         homePosition,date,url,title)
                             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
         self.cur.execute(q_video, (parti, scenario, vue, duree,
-                                   video['refreshNB'], video['homePosition'],
-                                   date, video['url'], video['title']))
+                                   video['refreshNB'], video['url'],
+                                   video['title'], video['homePosition'],
+                                   date))
