@@ -9,6 +9,7 @@ class Manage():
 		self.cur.execute("""CREATE TABLE Video (
 								ID int PRIMARY KEY AUTO_INCREMENT,
 								parti VARCHAR(40), 
+                                soutien VARCHAR(40),
 								scenario VARCHAR(40),
 								vue bigint,
 								duree float,
@@ -17,7 +18,7 @@ class Manage():
 								title VARCHAR(200),
 								homePosition int,
 								date DATE,
-							UNIQUE(parti,scenario,vue,duree,profondeur,homePosition,date))""")
+							UNIQUE(parti,scenario,soutien,vue,duree,profondeur,homePosition,date))""")
 
 	def destroyTable(self,Table):
 		self.cur.execute("DROP TABLE {}".format(Table))

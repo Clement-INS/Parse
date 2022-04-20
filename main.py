@@ -28,7 +28,7 @@ for filename in onlyfiles:
     with open(f'./{foldername}/{filename}', encoding='utf-8') as f:
         file = json.load(f)
         for video in file:
-            candidat = sort_video((video['title']), candidats)
+            (candidat,support) = sort_video((video['title']), candidats)
             if candidat != "":
                 try:
                     wtime = nb_time(video["duration"])
@@ -43,6 +43,7 @@ for filename in onlyfiles:
                 add_parti_data(
                         bdd,
                         candidat,
+                        support,
                         filename.replace(".json", ""),
                         video,
                         views,

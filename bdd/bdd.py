@@ -46,12 +46,15 @@ class BDD():
 
 if __name__ == "__main__" :
 	
-	bdd = BDD()
-	
-	# bdd.manage.renewTables()
-	# bdd.manage.createTables()
-	# bdd.manage.destroyAllTable()
+    bdd = BDD()
+    
+    #bdd.manage.renewTables() 
 
-	bdd.cur.execute("SELECT COUNT(*) FROM Video")
-	for x in bdd.cur :
-		print(x)
+    #bdd.manage.createTables()
+	#bdd.manage.destroyAllTable()
+
+    bdd.cur.execute("SELECT COUNT(*) FROM Video")
+    for x in bdd.cur :
+        print(x)
+
+

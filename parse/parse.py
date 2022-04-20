@@ -56,7 +56,7 @@ def get_list_supports():
     Renvoie la liste des noms associés aux candidats
     et leurs supports en majuscule
     """
-    with open('candidats.json', encoding='utf-8') as json_candidats:
+    with open('candidates_and_supports.json', encoding='utf-8') as json_candidats:
         return json.load(json_candidats)
 
 
@@ -68,18 +68,20 @@ def sort_video(title, candidats) -> str:
     nt = remove_accents(title).upper()
     for name in candidats:
         # pattern = "(?:^|\W)"+name+"(?:$|\W)"
-        pattern = r"(?:^|\W)((?!(GAETAN|G)).)* " + name + r"(?:$|\W)"
-        if re.search(pattern, nt, re.UNICODE):
-            return name
-    return ""
+        for support in candidats[name]:
+            pattern = r"(?:^|\W)((?!(GAETAN|G)).)* " + support + r"(?:$|\W)"
+            if re.search(pattern, nt, re.UNICODE):
+                return (name,support)
+    return ("","")
 
 
-def add_parti_data(bdd, name, scenario, video, views, wtime, extract_date):
+def add_parti_data(bdd, parti, support, scenario, video, views, wtime, extract_date):
     """
     Ajoute les données d'une vidéo au parti associé selon le titre de la vidéo:
     """
     bdd.set.addVideo(
-            name,
+            parti,
+            support,
             scenario,
             video,
             views,
