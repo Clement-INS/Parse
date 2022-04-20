@@ -1,53 +1,53 @@
 {
-    "La Republique en marche": [
-        "MACRON EMMANUEL",
-        "DARMANIN GERALD",
-        "ATTAL GABRIEL"
-        "SCHIAPPA MARLENE"
+    "MACRON": [
+        "MACRON",
+        "GERALD DARMANIN",
+        "GABRIEL ATTAL",
+        "MARLENE SCHIAPPA"
     ],
-    "Rassemblement national": [
-        "BARDELLA JORDAN",
-        "LE PEN MARINE",
-        "ALIOT LOUIS"
+    "LE PEN": [
+        "JORDAN BARDELLA",
+        "LE PEN",
+        "LOUIS ALIOT"
     ],
-    "Les Republicains": [
-        "PECRESSE VALERIE",
-        "DATI RACHIDA",
-        "CIOTTI ERIC"
+    "PECRESSE": [
+        "PECRESSE",
+        "RACHIDA DATI",
+        "ERIC CIOTTI"
     ],
-    "Parti communiste francais": [
-        "ROUSSEL Fabien",
-        "BROSSAT IAN"
+    "ROUSSEL": [
+        "ROUSSEL",
+        "IAN BROSSAT"
     ],
-    "Reconquete": [
-        "ZEMMOUR Eric",
-        "DIERS Antoine"
+    "ZEMMOUR": [
+        "ZEMMOUR",
+        "ANTOINE DIERS"
     ],
-    "Europe Ecologie-les Verts": [
-        "JADOT Yannick",
-        "ROUSSEAU Sandrine",
-        "COFFIN Alice"
+    "JADOT": [
+        "JADOT",
+        "SANDRINE ROUSSEAU",
+        "ALICE COFFIN"
     ],
-    "Parti socialiste": [
-        "HIDALGO Anne",
-        "FAURE Olivier"
+    "HIDALGO": [
+        "HIDALGO",
+        "OLIVIER FAURE"
     ],
-    "La France insoumise": [
-        "MELENCHON Jean-Luc",
-        "GUIRAUD David",
-        "QUATENNENS Adrien",
-        "RUFFIN Francois"
+    "MELENCHON": [
+        "MELENCHON",
+        "DAVID GUIRAUD",
+        "ADRIEN QUATENNENS",
+        "FRANCOIS RUFFIN"
     ],
-    "Lutte ouvriere": [
-        "ARTHAUD Nathalie"
+    "ARTHAUD": [
+        "ARTHAUD"
     ],
-    "Debout la France": [
-        "DUPONT-AIGNAN Nicolas"
+    "DUPONT-AIGNAN": [
+        "DUPONT-AIGNAN"
     ],
-    "Nouveau parti anticapitaliste": [
-        "POUTOU Philippe"
+    "POUTOU": [
+        "POUTOU"
     ],
-    "Resistons": [
-        "LASSALLE Jean"
+    "LASSALLE": [
+        "LASSALLE"
     ]
 }
